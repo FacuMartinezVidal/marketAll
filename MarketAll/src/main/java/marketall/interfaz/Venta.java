@@ -58,7 +58,7 @@ public class Venta {
 
     public void procesarVenta() {
         if (producto.getCantidadEnStock() > 0 && cantidad < producto.getCantidadEnStock()) {
-            double montoTotal = producto.getPrecioUnitario();
+            double montoTotal = (producto.getPrecioUnitario() * cantidad);
 
             if (medioPago.toUpperCase().equals("DEBITO")) {
                 // No hay descuento, se cobra el valor total de la venta
