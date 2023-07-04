@@ -201,6 +201,8 @@ public class HelloApplication extends Application {
             ventasList.getItems().add(venta.toString()); // Agregar la representación de la venta
         }
 
+
+
     }
 
     private void showRegistroVentaStage() {
@@ -243,11 +245,8 @@ public class HelloApplication extends Application {
                 try {
                     // Crear venta
                     Venta venta;
-                    if (medioPago.equalsIgnoreCase("Credito")) {
-                        venta = new Venta(producto, medioPago, cantidad, cuotas, codigoVenta);
-                    } else {
-                        venta = new Venta(producto, medioPago, cantidad, codigoVenta);
-                    }
+                    venta = new Venta(producto,medioPago,cantidad,cuotas,codigoVenta);
+
 
                     // Procesar venta
                     venta.procesarVenta();

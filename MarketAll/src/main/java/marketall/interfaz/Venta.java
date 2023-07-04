@@ -24,57 +24,40 @@ public class Venta {
     public Venta(){
         this.ventas = new ArrayList<>();
     }
-    public Venta(Producto producto, String medioPago, int cantidad) {
-        this.producto = producto;
-        this.medioPago = medioPago;
-        this.cantidad = cantidad;
-        this.cuotas =0;
-    }
-    public Venta(Producto producto, String medioPago, int cantidad, int cuotas, int codigoVenta) {
-        this.producto = producto;
-        this.medioPago = medioPago;
-        this.cantidad = cantidad;
-        this.codigoVenta = codigoVenta;
-        this.cuotas = cuotas;
-        if (medioPago.toUpperCase().equals("EFECTIVO") || medioPago.toUpperCase().equals("DEBITO")) {
-            while (cuotas != 1){
-                throw new IllegalArgumentException("Cantidad de cuotas invalidas");
-            }
-            this.cuotas=1;
-
-        } else{
-            throw new IllegalArgumentException("Las cantidad de cuotas ingresadas no son validas");
-        }
 
 
-        // Resto del código del constructor
-    }
     //Constructor para tarjeta de credito
-    public Venta(Producto producto, String medioPago, int cantidad, int cuotas) {
+    public Venta(Producto producto, String medioPago, int cantidad, int cuotas,int codigoVenta) {
         this.producto = producto;
-        this.medioPago = medioPago;
         this.cantidad = cantidad;
+        this.medioPago = medioPago;
+        this.codigoVenta = codigoVenta;
+
         //solo se permite ingresar cienta cantidad de cuotas
-        while (medioPago.toUpperCase() != "CREDITO" || medioPago.toUpperCase() != "DEBITO" || medioPago.toUpperCase() != "EFECTIVO"){
-            throw new IllegalArgumentException("Metodo de pago no valido");
-        }
-        if ( (cuotas == 2 || cuotas == 3 || cuotas ==6) && medioPago.toUpperCase().equals("CREDITO") ){
-            this.cuotas = cuotas;
-        } else if (medioPago.toUpperCase().equals("EFECTIVO") || medioPago.toUpperCase().equals("DEBITO")) {
-            while (cuotas != 1){
+        if ((medioPago.toUpperCase().equals("CREDITO"))) {
+            if ((cuotas == 2 || cuotas == 3 || cuotas ==6)){
+                this.cuotas = cuotas;
+            } else{
                 throw new IllegalArgumentException("Cantidad de cuotas invalidas");
             }
-            this.cuotas=1;
-
-        } else{
-            throw new IllegalArgumentException("Las cantidad de cuotas ingresadas no son validas");
+        } else if ((medioPago.toUpperCase().equals("DEBITO")) || (medioPago.toUpperCase().equals("EFECTIVO")) ){
+            if (cuotas == 1){
+                this.cuotas = 1;
+            }else{
+                throw new IllegalArgumentException("Cantidad de cuotas invalidas");
+            }
+        }else {
+            throw new IllegalArgumentException("Metodo de pago invalido");
         }
 
+
     }
+
+
 
 
     public void procesarVenta() {
-        if (producto.getCantidadEnStock() > 0) {
+        if (producto.getCantidadEnStock() > 0 && cantidad < producto.getCantidadEnStock()) {
             double montoTotal = producto.getPrecioUnitario();
 
             if (medioPago.toUpperCase().equals("DEBITO")) {
@@ -96,7 +79,7 @@ public class Venta {
 
             producto.setCantidadEnStock(producto.getCantidadEnStock() - cantidad);
             if (producto.getStockMinimo() == producto.getCantidadEnStock()){
-                System.out.println();
+
                 ventas.add(producto);
             }
 
@@ -104,7 +87,7 @@ public class Venta {
             System.out.println("Venta procesada exitosamente.");
             System.out.println("Monto total: " + montoTotal);
         } else {
-            System.out.println("No hay stock suficiente del producto.");
+            throw new IllegalArgumentException("No hay stock suficiente");
         }
 
     }
@@ -139,5 +122,7 @@ public class Venta {
         ultimoCodigoVenta++;
         return ultimoCodigoVenta;
     }
+
+
 
 }
