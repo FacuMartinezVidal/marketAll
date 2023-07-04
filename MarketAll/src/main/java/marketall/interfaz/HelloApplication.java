@@ -178,15 +178,15 @@ public class HelloApplication extends Application {
         ventasList.setPrefHeight(200);
 
         // Agregar componentes al contenedor principal
-        root.getChildren().addAll(productList, agregarButton, codigoField, descripcionField, precioField,
-                stockField, stockMinField, modificarButton, codigoModificarField, nuevaDescripcionField,
-                nuevoPrecioField, nuevoStockField, nuevoStockMinField, eliminarButton, codigoEliminarField,
-                registrarVentaButton, ventasList);
+        root.getChildren().addAll(productList, codigoField, descripcionField, precioField,
+                stockField, stockMinField, agregarButton, codigoModificarField, nuevaDescripcionField,
+                nuevoPrecioField, nuevoStockField, nuevoStockMinField, modificarButton, codigoEliminarField,
+                eliminarButton, ventasList, registrarVentaButton);
 
         // Crear escena y mostrar ventana principal
-        Scene scene = new Scene(root, 400, 800);
+        Scene scene = new Scene(root, 1000, 1000);
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Sistema de Ventas");
+        primaryStage.setTitle("MarketAll");
         primaryStage.show();
     }
 
@@ -253,7 +253,13 @@ public class HelloApplication extends Application {
                     updateProductList();
 
                     // Agregar venta a la lista de ventas realizadas
-                    ventasList.getItems().add(venta.toString() + " - Monto Total: " + venta.getMontoTotal());
+                    ventasList.getItems().add(venta.toString() + " | Monto Total: " + venta.getMontoTotal());
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Éxito");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Venta procesada correctamente");
+                    alert.showAndWait();
+
 
                 } catch (IllegalArgumentException e) {
                     // Mostrar mensaje de error si la cantidad de cuotas no es válida
@@ -281,6 +287,8 @@ public class HelloApplication extends Application {
 
             // Limpiar formulario
 
+            codigoField.clear();
+            cantidadField.clear();
             medioPagoField.clear();
             cuotasField.clear();
         });
@@ -292,7 +300,7 @@ public class HelloApplication extends Application {
         root.getChildren().addAll(codigoField, medioPagoField,cantidadField, cuotasField, registrarButton);
 
         // Crear escena y mostrar ventana
-        Scene scene = new Scene(root, 300, 200);
+        Scene scene = new Scene(root, 700, 200);
         stage.setScene(scene);
         stage.show();
     }

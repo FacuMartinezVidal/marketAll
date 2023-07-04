@@ -116,7 +116,7 @@ public class Venta {
     }
     @Override
     public String toString() {
-        return "Codigo de Venta= "+codigoVenta+" Venta producto=" + producto + ", medioPago=" + medioPago;
+        return "-Codigo de Venta: "+codigoVenta + producto + " | Medio de pago: " + medioPago + " | Cant Vendida: " + cantidad + " | Cantidad de cutoas: " + cuotas;
     }
     public static int generarCodigoVenta() {
         ultimoCodigoVenta++;
